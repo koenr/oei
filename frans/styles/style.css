@@ -1,0 +1,169 @@
+@CHARSET "UTF-8";
+
+
+body{
+	margin-top:0px;
+	background-attachment: fixed;
+	}
+
+a ,a:active, a:visited{color:black}
+
+a:hover{color:orange}
+/* Alle hoeken afgerond */
+.fullborderradius{
+	border-width:1px;
+	border:1px;
+	border-style:solid;
+	border-color:silver;
+	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	border-radius:10px;
+	
+	
+	}
+.topborderradius{
+	border-width:1px;
+	border:1px;
+	border-style:solid;
+	border-color:silver;
+	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;	
+}
+
+
+span.opnieuw{
+padding-left:3px;
+padding-right:3px;
+background-color:yellow;
+}
+
+
+tr.tabelrij, tr.tabelrij:active, tr.tabelrij:visited {
+	background-color:none;
+}
+
+tr.tabelrij:hover{
+	background-color:lightgreen;
+
+}
+
+
+
+.tabelrijdelete{
+	background-color:#FF8080;
+	
+}
+
+
+
+input.inputveld, textarea.inputveld {
+	border:none;
+	color:black;
+	background-color:transparent;
+}
+
+input.inputveld:hover,input.inputveld:focus, textarea.inputveld:hover, textarea.inputveld:focus {
+	
+	color:black;
+	background-color:white;
+}
+
+
+
+/*HOME PAGINA */
+
+.semestermapheader{
+	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;	
+	
+	background-color:#CCCCCC;
+	margin-left:auto;
+	margin-right:auto;
+	width:90%;
+	padding-left:10px;
+}
+
+
+.bladentabel{
+	width:90.5%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-left:10px;
+	border-collapse:collapse;
+	border-style:solid;
+	border-width:1px;
+	}
+	
+	
+	
+.foutentabel{
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-left:10px;
+	border-collapse:collapse;
+	border-style:solid;
+	border-width:1px;
+	
+}
+
+
+.bekijkbladentabel{
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-left:10px;
+	border-collapse:collapse;
+	border-style:solid;
+	border-width:1px;
+}
+
+
+.leerkrachtenheader{
+	border: 1px;
+	border-width:1px;
+	border-style:solid;
+
+	
+	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	
+	background-color:#EDEDED;	
+	
+	height:40px;
+}
+
+.menuitem{
+	float:left;
+	width:100px;
+	height:40px;
+	margin-right:70px;
+	margin-left:30px;
+	
+	background-color:#CFCFCF;	
+	
+	text-align:center;
+	vertical-align:text-bottom;
+	
+}
+
+
+.menuitem:hover{
+	float:left;
+	width:100px;
+	height:40px;
+	margin-right:70px;
+	margin-left:30px;
+	
+	background-color:#A8A8A8;	
+	
+	text-align:center;
+	vertical-align:text-bottom;
+	
+}
+
+.leerkrachteninclude{
+	margin-top:20px;	
+}
+
+

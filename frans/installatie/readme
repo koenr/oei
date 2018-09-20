@@ -1,0 +1,16 @@
+Installatie
+-----------
+
+* Maak een nieuwe databank aan, collatie unicode
+* Voer installatie.sql uit (bijvoorbeeld door de inhoud te plakken in het sql-venster in phpmyadmin
+* Wijzig de gebruikersnaam voor de beheerder in de tabel 'gebruikers' en in de tabel 'administrators'
+* Maak verbinding met de databank door een kopie te maken van het bestand phpklassen/Verbinding-dist.php naar
+phpklassen/Verbinding.php en daarin de juiste databanknaam, gebruikersnaam en wachtwoord in te vullen.
+* Maak een link vanuit Moodle waar de juiste parameters meegegeven worden:
+   - voornaam - Gebruiker - Voornaam
+   - achternaam - Gebruiker - Achternaam
+   - inschrijvingsnummer - Gebruiker - Nummer(ID)
+   - email - Gebruiker - E-mailadres
+Voor de leerlingen link je naar http://server/oei/leerlingen met bovenstaande parameters
+Voor de leraars link je naar http://server/oei/leerkrachten zonder parameters
+Voor de beheerders link je naar http://server/oei/administrators zonder parameters

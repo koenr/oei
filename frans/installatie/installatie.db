@@ -1,0 +1,248 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.3deb1ubuntu1.3
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generatie Tijd: 10 Sept 2010 om 16:21
+-- Server versie: 5.0.51
+-- PHP Versie: 5.2.4-2ubuntu5.10
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `oei_frans`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `administrators`
+--
+
+CREATE TABLE IF NOT EXISTS `administrators` (
+  `id` int(11) NOT NULL auto_increment,
+  `naamcode` char(7) collate utf8_unicode_ci NOT NULL,
+  `gebruiker_id` int(11) NOT NULL,
+  `voornaam` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `achternaam` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `email` varchar(255) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `administrators`
+--
+
+INSERT INTO `administrators` (`id`, `naamcode`, `gebruiker_id`, `voornaam`, `achternaam`, `email`) VALUES
+(2, 'SINT', 1, 'Sint', 'Niklaas', '');
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `bladen`
+--
+
+CREATE TABLE IF NOT EXISTS `bladen` (
+  `id` int(11) NOT NULL auto_increment,
+  `inschrijvingsnummer` char(7) collate utf8_unicode_ci NOT NULL COMMENT 'inschrijvingsnummer verwijst naar leerling',
+  `titel` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `aangemaakt` date NOT NULL COMMENT 'datum waarop het blad aangemaakt is',
+  `laatst_bewerkt` datetime NOT NULL COMMENT 'Datetime waarop laatst bewerkt',
+  `commentaar` text collate utf8_unicode_ci COMMENT 'Commentaar van de leerkracht die verschijnt als het blad verbeterd is',
+  `kan_bewerken` int(1) NOT NULL default '1' COMMENT '0 of 1: boolean of leerling het blad nog mag bewerken',
+  `verbeterd` int(1) NOT NULL default '0' COMMENT '0 of 1: boolean om aan te duiden of blad al verbeterd is. Als op 1: overruled het ''kan_bewerken',
+  `semester` int(1) NOT NULL COMMENT '1 of 2: in welk semester het blad aangemaakt is',
+  `gelezen` int(1) NOT NULL default '1' COMMENT '0 of 1 -> 0: er is een nieuwe commentaar van de leerkracht / 1: De leerling heeft de commentaar gelezen of er is geen commentaar',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `bladen`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `fouten`
+--
+
+CREATE TABLE IF NOT EXISTS `fouten` (
+  `id` int(11) NOT NULL auto_increment,
+  `blad_id` int(11) NOT NULL,
+  `foutnr` varchar(5) collate utf8_unicode_ci NULL COMMENT 'verwijst naar tabel ''foutomschrijvingen'' ',
+  `fout` varchar(255) collate utf8_unicode_ci NULL COMMENT 'de fout die de leerling heeft gemaakt',
+  `verbetering` varchar(255) collate utf8_unicode_ci NULL COMMENT 'de verbetering ingevuld door leerling',
+  `verantwoording` varchar(4096) NULL COMMENT 'de verantwoording van de verbetering',
+  `commentaar` varchar(255) collate utf8_unicode_ci NULL COMMENT 'De commentaar die de leerkracht per fout kan geven, als de verbetering niet correct is bijvoorbeeld',
+  `leerkracht_bekeken` int(1) NULL COMMENT '0 of 1: boolean: heeft leerkracht deze fout al nagekeken?',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `fouten`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `foutomschrijvingen`
+--
+
+CREATE TABLE IF NOT EXISTS `foutomschrijvingen` (
+  `id` int(11) NOT NULL auto_increment,
+  `titel` varchar(255) collate utf8_unicode_ci default NULL COMMENT 'Titel van de foutomschrijving (vb.: Les verbes, le substantif)',
+  `foutnr` varchar(5) collate utf8_unicode_ci default '' COMMENT 'de nr van de foutomschrijving',
+  `omschrijving` text collate utf8_unicode_ci,
+  `grammatica` varchar(255) collate utf8_unicode_ci default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `foutomschrijvingen`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `gebruikers`
+--
+
+CREATE TABLE IF NOT EXISTS `gebruikers` (
+  `id` int(11) NOT NULL auto_increment,
+  `gebruikersnaam` char(7) collate utf8_unicode_ci NOT NULL,
+  `wachtwoord` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `type` int(1) NOT NULL COMMENT '1: leerling, 2: leerkracht, 3:admin',
+  `login_hash` varchar(255) collate utf8_unicode_ci NULL COMMENT 'Een hash die bij het inloggen wordt gestored in dit veld en in een SESSION variabele: Enkel als deze twee overeenkomen is de login geldig',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `gebruikers`
+--
+
+INSERT INTO `gebruikers` (`id`, `gebruikersnaam`, `wachtwoord`, `type`, `login_hash`) VALUES
+(1, 'SINT', '5aec664d5d20e97332a907c16ddfcf42', 3, '9bcff6794caf59848c8d65e786c7c76d');
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `klassen`
+--
+
+CREATE TABLE IF NOT EXISTS `klassen` (
+  `id` int(11) NOT NULL auto_increment,
+  `klasnaam` varchar(10) collate utf8_unicode_ci default NULL COMMENT 'bv: 6WeWa',
+  `jaar` int(1) default NULL COMMENT '5 of 6: is het een klas van het vijfde of het zesde jaar',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `klassen`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `leerkrachten`
+--
+
+CREATE TABLE IF NOT EXISTS `leerkrachten` (
+  `id` int(11) NOT NULL auto_increment,
+  `gebruiker_id` int(11) NOT NULL COMMENT 'verwijst naar account',
+  `naamcode` char(4) collate utf8_unicode_ci NOT NULL,
+  `voornaam` varchar(255) collate utf8_unicode_ci NULL,
+  `achternaam` varchar(255) collate utf8_unicode_ci NULL,
+  `email` varchar(255) collate utf8_unicode_ci NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `leerkrachten`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `leerlingen`
+--
+
+CREATE TABLE IF NOT EXISTS `leerlingen` (
+  `id` int(11) NOT NULL auto_increment,
+  `inschrijvingsnummer` char(7) collate utf8_unicode_ci NOT NULL,
+  `voornaam` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `achternaam` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `email` varchar(255) collate utf8_unicode_ci NULL,
+  `klas_id` int(2) NOT NULL COMMENT 'id verwijst naar klas uit tabel klassen',
+  `klasnr` int(2) NOT NULL,
+  `sterkpunt1_id` int(2) NOT NULL COMMENT 'Point Fort eerste semester. Id verwijst naar tabel ''sterkzwak''',
+  `zwakpunt1_id` int(2) NOT NULL COMMENT 'Point Faible eerste semester. Id verwijst naar tabel ''sterkzwak''',
+  `sterkpunt2_id` int(2) NOT NULL COMMENT 'Point Fort tweede semester. Id verwijst naar tabel ''sterkzwak''',
+  `zwakpunt2_id` int(2) NOT NULL COMMENT 'Point Faible tweede semester. Id verwijst naar tabel ''sterkzwak''',
+  `sterkpunt1_opnieuw` int(1) NULL COMMENT 'Hier kan de leerkracht aanduiden of de leerling een bepaald sterk punt opnieuw moet studeren',
+  `zwakpunt1_opnieuw` int(1) NULL COMMENT 'Hier kan de leerkracht aanduiden of de leerling een bepaald sterk punt opnieuw moeHier kan de leerkracht aanduiden of de leerling een bepaald zwak punt opnieuw moet studerent studeren',
+  `sem1_punten` float NULL COMMENT 'punten eerste semester',
+  `sem1_totaal` float NULL COMMENT 'Het totaal waarop de punten staan',
+  `sem2_punten` float NULL COMMENT 'punten tweede semester',
+  `sem2_totaal` float NULL COMMENT 'Het totaal waarop de punten staan',
+  `sem1_verbeterd` int(1) NULL COMMENT '0 of 1: aanduiden of semester verbeterd is',
+  `sem2_verbeterd` int(1) NULL COMMENT '0 of 1: aanduiden of semester verbeterd is',
+  `gebruiker_id` int(11) NOT NULL COMMENT 'verwijst naar account uit tabel ''accounts''',
+  `achtergrond` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `tekstkleur` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `sterkpunt1_vijfde` varchar(255) collate utf8_unicode_ci NULL default 'false' COMMENT 'hier ziet een zesdejaar zijn sterke zwakke punten van het vijfde',
+  `zwakpunt1_vijfde` varchar(255) collate utf8_unicode_ci NULL default 'false' COMMENT 'hier ziet een zesdejaar zijn sterke zwakke punten van het vijfde',
+  `sterkpunt2_vijfde` varchar(255) collate utf8_unicode_ci NULL default 'false' COMMENT 'hier ziet een zesdejaar zijn sterke zwakke punten van het vijfde',
+  `zwakpunt2_vijfde` varchar(255) collate utf8_unicode_ci NULL default 'false' COMMENT 'hier ziet een zesdejaar zijn sterke zwakke punten van het vijfde',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `leerlingen`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `sterkezwakke_punten`
+--
+
+CREATE TABLE IF NOT EXISTS `sterkezwakke_punten` (
+  `id` int(11) NOT NULL auto_increment,
+  `omschrijving` varchar(255) collate utf8_unicode_ci default NULL COMMENT '"naam" van de point fort/faible',
+  `jaar` int(1) default NULL COMMENT '5 of 6: is het een onderwerp van het vijfde of het zesde jaar',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tabel met points forts en points faibles' AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `sterkezwakke_punten`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabel structuur voor tabel `sterkezwakke_punten_vorigjaar`
+--
+
+CREATE TABLE IF NOT EXISTS `sterkezwakke_punten_vorigjaar` (
+  `id` int(11) NOT NULL auto_increment,
+  `inschrijvingsnummer` char(7) collate utf8_unicode_ci NOT NULL,
+  `sterkpunt1` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `sterkpunt2` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `zwakpunt1` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `zwakpunt2` varchar(255) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `sterkezwakke_punten_vorigjaar`
+--
+
+
+
