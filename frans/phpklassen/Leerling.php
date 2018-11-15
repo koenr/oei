@@ -476,6 +476,11 @@ HTML;
 		$zwakpunt2_id = HelperFuncties::safety($zwakpunt2_id);
 		$klas_id = HelperFuncties::safety($klas_id);
 		$klasnr = HelperFuncties::safety($klasnr);
+
+		if ($sterkpunt1_id=='')$sterkpunt1_id=0;
+		if ($sterkpunt2_id=='')$sterkpunt2_id=0;
+		if ($zwakpunt1_id=='')$zwakpunt1_id=0;
+		if ($zwakpunt2_id=='')$zwakpunt2_id=0;
 		
 		$gebruiker_id = Gebruiker::maakGebruiker($inschrijvingsnummer,$wachtwoord,1);
 		if($gebruiker_id){
