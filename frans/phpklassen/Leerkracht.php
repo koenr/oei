@@ -166,7 +166,11 @@ public function veranderWachtwoord($gebruikers_id,$wachtwoord,$wachtwoord2){
 			$sem1_zwak = HelperFuncties::safety($sem1_zwak);
 			$sem2_sterk = HelperFuncties::safety($sem2_sterk);
 			$sem2_zwak = HelperFuncties::safety($sem2_zwak);
-		
+				if ($sem1_sterk=='')$sem1_sterk=0;
+				if ($sem1_zwak=='')$sem1_zwak=0;
+				if ($sem2_sterk=='')$sem2_sterk=0;
+				if ($sem2_zwak=='')$sem2_zwak=0;
+
 			
 				$query = "UPDATE leerlingen SET sterkpunt1_id='".$sem1_sterk."', zwakpunt1_id='".$sem1_zwak."', sterkpunt2_id='".$sem2_sterk."', zwakpunt2_id='".$sem2_zwak."' WHERE inschrijvingsnummer='".$inschrijvingsnummer."'";
 				if(mysqli_query(Verbinding::$link,$query)){
