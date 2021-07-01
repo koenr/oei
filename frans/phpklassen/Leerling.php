@@ -53,7 +53,7 @@ class Leerling extends Gebruiker{
 		$result = mysqli_query(Verbinding::$link,"SELECT * FROM leerlingen WHERE inschrijvingsnummer='".$inschrijvingsnummer."'");
 		$leerling = mysqli_fetch_assoc($result);
 		
-		foreach($leerling as $naam=>$waarde){
+		foreach((array)$leerling as $naam=>$waarde){
 			$this->$naam = $waarde;
 		}
 		
